@@ -1,0 +1,11 @@
+@(worldId: java.util.UUID, worldName: String)
+
+@main(worldName) {
+    <h1>@worldName</h1>
+} {
+    <script type="text/javascript" src="@routes.Assets.at("lib/rot.js/rot.js")"></script>
+    <script type="text/javascript" src="@routes.Assets.at("js/game.js")"></script>
+    <script type="text/javascript" src="@routes.Assets.at("js/server.js")"></script>
+    <script type="text/javascript" src="@routes.Assets.at("js/player.js")"></script>
+    <script type="text/javascript">Server.init();</script>
+}

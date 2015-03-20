@@ -1,0 +1,10 @@
+@(worlds: List[(java.util.UUID, String)])
+
+@main("Welcome to Prototype #1") {
+    <ul>
+    @worlds.map { case (uuid, name) =>
+      <li><a href="@routes.World.show(uuid.toString)">@name</a></li>
+    }
+    </ul>
+} {
+}

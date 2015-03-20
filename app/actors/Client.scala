@@ -17,9 +17,9 @@ object Client {
   case object GetMap extends ClientMessage
   case class UpdateMap(map: Seq[Seq[String]]) extends ClientMessage
   case class MovePlayer(newX: Int, newY: Int, oldX: Int, oldY: Int) extends ClientMessage
-  case class AddEntity(id: Int) extends ClientMessage
-  case class MoveEntity(id: Int, newX: Int, newY: Int) extends ClientMessage
-  case class RemoveEntity(id: Int) extends ClientMessage
+  case class AddEntity(id: UUID) extends ClientMessage
+  case class MoveEntity(id: UUID, newX: Int, newY: Int) extends ClientMessage
+  case class RemoveEntity(id: UUID) extends ClientMessage
 
   case class RemoveClient(client: ActorRef)
 

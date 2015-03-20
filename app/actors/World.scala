@@ -12,23 +12,22 @@ object World {
 
 class World(id: UUID, name: String) extends Actor with ActorLogging {
   import World._
-  var clientId = 1
-  var clients = Set.empty[(Int, ActorRef)]
+  var clients = Set.empty[(UUID, ActorRef)]
   var map = Seq.tabulate(80, 25) { (col, row) =>
     if (row == 0 | col == 0 | row == 24 | col == 79) "#" else "."
   }
 
   def receive = {
-    case AddClient(client) =>
-      log.debug(s"World($id/$name).AddClient($client)")
-      val pair = (clientId, client)
+    case AddClient(newClient) =>
+      log.debug(s"World($id/$name).AddClient($newClient)")
+      val clientId = UUID.randomUUID()
+      val pair = (clientId, newClient)
       clients = clients + pair
-      clientId = clientId + 1
-      client ! GreetClient(map)
-      clients.foreach { oldClient =>
-        if (oldClient._2 != client) {
-          oldClient._2 ! AddEntity(clientId)
-          client ! AddEntity(oldClient._1)
+      newClient ! GreetClient(map)
+      clients.foreach { case (id, client) =>
+        if (client != newClient) {
+          client ! AddEntity(clientId)
+          newClient ! AddEntity(id)
         }
       }
 
